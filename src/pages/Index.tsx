@@ -62,12 +62,12 @@ const Index = () => {
       case 'bonuses':
         return <TasksPage telegramId={telegramUser?.id} />;
       
-      case 'earn':
+      case 'profile':
         return <ReferralPage />;
       
+      case 'earn':
       case 'items':
       case 'leaderboard':
-      case 'profile':
         return (
           <div className="flex-1 flex items-center justify-center pb-24">
             <div className="text-center space-y-4 px-6">
