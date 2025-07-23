@@ -200,41 +200,8 @@ export const useUserData = (telegramId?: number) => {
     }
   };
 
-  const addTask = async (taskType: string, taskName: string, tonixReward: number = 0): Promise<boolean> => {
-    if (!telegramId) return false;
-
-    try {
-      const { data, error } = await supabase
-        .from('tasks')
-        .insert({
-          telegram_id: telegramId,
-          task_type: taskType,
-          task_name: taskName,
-          status: 'completed',
-          tonix_earned: tonixReward,
-          completed_at: new Date().toISOString(),
-        })
-        .select()
-        .single();
-
-      if (error) {
-        console.error('Error adding task:', error);
-        return false;
-      }
-
-      // Add tonix to user balance
-      if (tonixReward > 0) {
-        await updateTonixBalance(tonixReward, 'add');
-      }
-
-      // Refresh tasks
-      await fetchUserData();
-      return true;
-    } catch (error) {
-      console.error('Error in addTask:', error);
-      return false;
-    }
-  };
+  // Note: Task completion should use the complete_task database function via useTaskData hook
+  // This ensures proper tonix allocation and transaction recording without resets
 
   useEffect(() => {
     fetchUserData();
@@ -246,7 +213,6 @@ export const useUserData = (telegramId?: number) => {
     loading,
     updateDailyStreak,
     updateTonixBalance,
-    addTask,
     refreshData: fetchUserData,
   };
 };

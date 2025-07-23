@@ -1,16 +1,43 @@
 import { Card } from "@/components/ui/card";
 import { useUserData } from "@/hooks/useUserData";
 import { useTransactions } from "@/hooks/useTransactions";
+import { useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
 interface BalanceCardProps {
   telegramId?: number;
 }
 
 export const BalanceCard = ({ telegramId }: BalanceCardProps) => {
-  const { userData } = useUserData(telegramId);
+  const { userData, refreshData } = useUserData(telegramId);
   const { getTodaysEarnings } = useTransactions(telegramId);
   const balance = userData?.totalTonix || 0;
   const todaysEarnings = getTodaysEarnings();
+
+  // Listen for real-time updates to user balance
+  useEffect(() => {
+    if (!telegramId) return;
+
+    const channel = supabase
+      .channel('user-balance-updates')
+      .on(
+        'postgres_changes',
+        {
+          event: 'UPDATE',
+          schema: 'public',
+          table: 'users',
+          filter: `telegram_id=eq.${telegramId}`
+        },
+        () => {
+          refreshData();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [telegramId, refreshData]);
   return (
     <Card className="bg-card/50 backdrop-blur-sm border-border/10 p-6 text-center space-y-3 animate-slide-up">
       <div className="space-y-3">
