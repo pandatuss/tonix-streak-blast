@@ -35,14 +35,16 @@ export const useUserData = (telegramId?: number) => {
     if (!telegramId) return;
 
     try {
+      // Always fetch fresh data from database to avoid stale state
       const { data: user, error: userError } = await supabase
         .from('users')
         .select('*')
         .eq('telegram_id', telegramId)
-        .single();
+        .maybeSingle(); // Use maybeSingle to avoid errors when user doesn't exist
 
-      if (userError && userError.code !== 'PGRST116') {
+      if (userError) {
         console.error('Error fetching user:', userError);
+        setLoading(false);
         return;
       }
 
@@ -59,6 +61,9 @@ export const useUserData = (telegramId?: number) => {
           totalDays: user.total_days || 0,
           level: user.level || 0,
         });
+      } else {
+        // User doesn't exist yet
+        setUserData(null);
       }
 
       // Fetch user tasks
