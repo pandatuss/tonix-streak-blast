@@ -35,12 +35,17 @@ const getTransactionTypeLabel = (type: Transaction['transaction_type']) => {
 
 export const TransactionHistory = ({ telegramId }: TransactionHistoryProps) => {
   const { transactions, loading } = useTransactions(telegramId);
+  
+  // Filter for only task completion transactions and limit to 3
+  const taskCompletions = transactions
+    .filter(transaction => transaction.transaction_type === 'task_completion')
+    .slice(0, 3);
 
   if (loading) {
     return (
       <Card className="bg-card/50 backdrop-blur-sm border-border/10 p-6">
         <div className="space-y-4">
-          <h3 className="text-lg font-semibold text-foreground">Recent Earnings</h3>
+          <h3 className="text-lg font-semibold text-foreground">Recent Task Completions</h3>
           <div className="space-y-3">
             {[...Array(3)].map((_, i) => (
               <div key={i} className="animate-pulse flex items-center space-x-3">
@@ -58,11 +63,11 @@ export const TransactionHistory = ({ telegramId }: TransactionHistoryProps) => {
     );
   }
 
-  if (transactions.length === 0) {
+  if (taskCompletions.length === 0) {
     return (
       <Card className="bg-card/50 backdrop-blur-sm border-border/10 p-6">
         <div className="text-center space-y-3">
-          <h3 className="text-lg font-semibold text-foreground">Recent Earnings</h3>
+          <h3 className="text-lg font-semibold text-foreground">Recent Task Completions</h3>
           <p className="text-muted-foreground">No transactions yet. Complete tasks to start earning!</p>
         </div>
       </Card>
@@ -72,9 +77,9 @@ export const TransactionHistory = ({ telegramId }: TransactionHistoryProps) => {
   return (
     <Card className="bg-card/50 backdrop-blur-sm border-border/10 p-6">
       <div className="space-y-4">
-        <h3 className="text-lg font-semibold text-foreground">Recent Earnings</h3>
-        <div className="space-y-3 max-h-80 overflow-y-auto">
-          {transactions.map((transaction) => (
+        <h3 className="text-lg font-semibold text-foreground">Recent Task Completions</h3>
+        <div className="space-y-3">
+          {taskCompletions.map((transaction) => (
             <div
               key={transaction.id}
               className="flex items-center justify-between p-3 rounded-lg bg-background/20 border border-border/10"
