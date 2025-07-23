@@ -27,7 +27,7 @@ export const UserHeader = ({
       
       <div className="flex-1">
         <p className="text-primary text-lg font-semibold mb-1">
-          {displayName}
+          {firstName}
         </p>
         <p className="text-foreground/80 text-base">
           {username}
