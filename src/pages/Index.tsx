@@ -4,16 +4,18 @@ import { BalanceCard } from "@/components/BalanceCard";
 import { DailyStreakCard } from "@/components/DailyStreakCard";
 import { UserStatsCard } from "@/components/UserStatsCard";
 import { BottomNavigation } from "@/components/BottomNavigation";
+import { useTelegramWebApp } from "@/hooks/useTelegramWebApp";
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState('home');
+  const { telegramUser, isLoading, error } = useTelegramWebApp();
 
-  // Mock user data - in a real app, this would come from Telegram Mini App API
+  // Default user data with Telegram integration
   const userData = {
-    username: "@tonixstreak",
-    firstName: "Alex",
-    lastName: "Smith",
-    avatarUrl: undefined, // Will show initials
+    username: telegramUser?.username ? `@${telegramUser.username}` : "@tonixuser",
+    firstName: telegramUser?.first_name || "Tonix",
+    lastName: telegramUser?.last_name || "User",
+    avatarUrl: telegramUser?.photo_url,
     balance: 127.856,
     currentStreak: 7,
     level: 8,
@@ -21,6 +23,30 @@ const Index = () => {
     totalTonix: 127.856,
     hasCheckedInToday: false
   };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-subtle font-inter text-foreground flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
+          <p className="text-muted-foreground">Loading Telegram data...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gradient-subtle font-inter text-foreground flex items-center justify-center">
+        <div className="text-center space-y-4 px-6">
+          <div className="p-8 bg-gradient-card rounded-2xl shadow-card">
+            <h2 className="text-xl font-bold text-foreground mb-2">Error</h2>
+            <p className="text-muted-foreground">{error}</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   const renderContent = () => {
     switch (activeTab) {
