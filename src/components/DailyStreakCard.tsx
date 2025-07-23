@@ -14,19 +14,26 @@ export const DailyStreakCard = ({
   hasCheckedInToday = false 
 }: DailyStreakCardProps) => {
   const [checkedIn, setCheckedIn] = useState(hasCheckedInToday);
+  const [checkInTime, setCheckInTime] = useState<Date | null>(null);
   const [timeLeft, setTimeLeft] = useState("");
   const { toast } = useToast();
 
-  // Calculate next check-in time (UTC+4)
+  // Calculate time until next check-in (24 hours after last check-in)
   useEffect(() => {
     const updateTimer = () => {
-      const now = new Date();
-      const utc4Now = new Date(now.getTime() + (4 * 60 * 60 * 1000));
-      const tomorrow = new Date(utc4Now);
-      tomorrow.setUTCDate(tomorrow.getUTCDate() + 1);
-      tomorrow.setUTCHours(0, 0, 0, 0);
+      if (!checkInTime) return;
       
-      const diff = tomorrow.getTime() - utc4Now.getTime();
+      const now = new Date();
+      const nextCheckIn = new Date(checkInTime.getTime() + (24 * 60 * 60 * 1000)); // 24 hours after check-in
+      const diff = nextCheckIn.getTime() - now.getTime();
+      
+      if (diff <= 0) {
+        setCheckedIn(false);
+        setCheckInTime(null);
+        setTimeLeft("");
+        return;
+      }
+      
       const hours = Math.floor(diff / (1000 * 60 * 60));
       const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((diff % (1000 * 60)) / 1000);
@@ -34,17 +41,21 @@ export const DailyStreakCard = ({
       setTimeLeft(`${hours.toString().padStart(2, '0')}h ${minutes.toString().padStart(2, '0')}m ${seconds.toString().padStart(2, '0')}s`);
     };
 
-    updateTimer();
-    const interval = setInterval(updateTimer, 1000);
-    return () => clearInterval(interval);
-  }, []);
+    if (checkInTime) {
+      updateTimer();
+      const interval = setInterval(updateTimer, 1000);
+      return () => clearInterval(interval);
+    }
+  }, [checkInTime]);
 
   const handleCheckIn = () => {
+    const now = new Date();
     setCheckedIn(true);
+    setCheckInTime(now);
     toast({
-      title: "Check-in successful!",
-      description: "Streak maintained. Keep it up!",
-      duration: 3000,
+      title: "🎉 Check-in Successful!",
+      description: "Your daily streak has been maintained! Come back in 24 hours.",
+      duration: 4000,
     });
   };
 
@@ -68,29 +79,41 @@ export const DailyStreakCard = ({
       </div>
 
       <div className="space-y-3">
-        <p className="text-muted-foreground text-xs">
-          🔥 Your daily check-in is ready! Don't let your streak break.
-        </p>
-
         {!checkedIn ? (
-          <Button 
-            variant="gradient" 
-            size="sm" 
-            onClick={handleCheckIn}
-            className="w-full"
-          >
-            Check in (100 pts)
-          </Button>
+          <>
+            <p className="text-muted-foreground text-xs">
+              🔥 Your daily check-in is ready! Don't let your streak break.
+            </p>
+            <Button 
+              variant="gradient" 
+              size="sm" 
+              onClick={handleCheckIn}
+              className="w-full"
+            >
+              Daily Check-in
+            </Button>
+          </>
         ) : (
-          <Button 
-            variant="success" 
-            size="sm" 
-            disabled
-            className="w-full"
-          >
-            <Check className="h-4 w-4 mr-2" />
-            Checked in today
-          </Button>
+          <>
+            <p className="text-muted-foreground text-xs">
+              ✅ Checked in! Next check-in available in:
+            </p>
+            <div className="bg-gradient-to-r from-green-500/10 to-emerald-500/10 border border-green-500/20 rounded-lg p-3 text-center">
+              <div className="text-green-400 font-mono text-lg font-bold">
+                {timeLeft}
+              </div>
+              <p className="text-green-300/70 text-xs mt-1">until next check-in</p>
+            </div>
+            <Button 
+              variant="success" 
+              size="sm" 
+              disabled
+              className="w-full"
+            >
+              <Check className="h-4 w-4 mr-2" />
+              Streak Maintained
+            </Button>
+          </>
         )}
       </div>
     </Card>
