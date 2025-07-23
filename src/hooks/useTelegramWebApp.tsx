@@ -69,6 +69,7 @@ export const useTelegramWebApp = () => {
           first_name: user.first_name,
           last_name: user.last_name || null,
           profile_photo_url: user.photo_url || null,
+          total_tonix: 0
         }, {
           onConflict: 'telegram_id'
         });
