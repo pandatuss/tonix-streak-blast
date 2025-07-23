@@ -19,21 +19,21 @@ export type Database = {
           id: string
           rank_position: number | null
           telegram_id: number
-          total_points: number | null
+          total_tonix: number | null
           updated_at: string
         }
         Insert: {
           id?: string
           rank_position?: number | null
           telegram_id: number
-          total_points?: number | null
+          total_tonix?: number | null
           updated_at?: string
         }
         Update: {
           id?: string
           rank_position?: number | null
           telegram_id?: number
-          total_points?: number | null
+          total_tonix?: number | null
           updated_at?: string
         }
         Relationships: [
@@ -48,21 +48,21 @@ export type Database = {
       }
       referrals: {
         Row: {
-          bonus_points: number | null
+          bonus_tonix: number | null
           created_at: string
           id: string
           referred_telegram_id: number
           referrer_telegram_id: number
         }
         Insert: {
-          bonus_points?: number | null
+          bonus_tonix?: number | null
           created_at?: string
           id?: string
           referred_telegram_id: number
           referrer_telegram_id: number
         }
         Update: {
-          bonus_points?: number | null
+          bonus_tonix?: number | null
           created_at?: string
           id?: string
           referred_telegram_id?: number
@@ -90,31 +90,31 @@ export type Database = {
           completed_at: string | null
           created_at: string
           id: string
-          points_earned: number | null
           status: string
           task_name: string
           task_type: string
           telegram_id: number
+          tonix_earned: number | null
         }
         Insert: {
           completed_at?: string | null
           created_at?: string
           id?: string
-          points_earned?: number | null
           status?: string
           task_name: string
           task_type: string
           telegram_id: number
+          tonix_earned?: number | null
         }
         Update: {
           completed_at?: string | null
           created_at?: string
           id?: string
-          points_earned?: number | null
           status?: string
           task_name?: string
           task_type?: string
           telegram_id?: number
+          tonix_earned?: number | null
         }
         Relationships: [
           {
@@ -133,7 +133,7 @@ export type Database = {
           last_name: string | null
           profile_photo_url: string | null
           telegram_id: number
-          total_points: number | null
+          total_tonix: number | null
           updated_at: string
           username: string | null
         }
@@ -143,7 +143,7 @@ export type Database = {
           last_name?: string | null
           profile_photo_url?: string | null
           telegram_id: number
-          total_points?: number | null
+          total_tonix?: number | null
           updated_at?: string
           username?: string | null
         }
@@ -153,7 +153,7 @@ export type Database = {
           last_name?: string | null
           profile_photo_url?: string | null
           telegram_id?: number
-          total_points?: number | null
+          total_tonix?: number | null
           updated_at?: string
           username?: string | null
         }
