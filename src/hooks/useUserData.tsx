@@ -175,18 +175,8 @@ export const useUserData = (telegramId?: number) => {
         return false;
       }
 
-      // Update referral commission if adding Tonix
-      if (operation === 'add' && amount > 0) {
-        try {
-          await supabase.rpc('update_referral_commission', {
-            referred_user_telegram_id: telegramId,
-            tonix_earned: amount
-          });
-        } catch (commissionError) {
-          console.error('Error updating referral commission:', commissionError);
-          // Don't fail the main operation if commission update fails
-        }
-      }
+      // Note: Referral commission is now handled by the complete_task database function
+      // This prevents conflicts and ensures proper transaction recording
 
       setUserData(prev => prev ? { 
         ...prev, 
