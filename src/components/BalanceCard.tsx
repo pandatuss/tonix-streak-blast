@@ -16,7 +16,7 @@ export const BalanceCard = ({ balance = 50.042 }: BalanceCardProps) => {
             {balance.toLocaleString()}
           </p>
           <p className="text-primary text-sm font-medium">
-            Points
+            TONIX
           </p>
         </div>
         <p className="text-success text-sm font-medium">
