@@ -45,15 +45,26 @@ export const Preloader = ({ onComplete }: PreloaderProps) => {
     <div className="min-h-screen bg-gradient-subtle font-inter text-foreground flex items-center justify-center">
       <div className="max-w-md mx-auto px-6">
         <Card className="bg-card/50 backdrop-blur-sm border-border/10 p-8 text-center space-y-6 animate-slide-up">
-          {/* Logo/Icon */}
-          <div className="relative mx-auto w-20 h-20 bg-gradient-primary rounded-2xl flex items-center justify-center mb-6">
-            <div className="text-3xl font-bold text-primary-foreground">T</div>
+          {/* Water Drops Loading */}
+          <div className="relative mx-auto w-20 h-20 flex items-center justify-center mb-6">
+            {/* Center droplet */}
+            <div className="absolute w-4 h-4 bg-primary rounded-full opacity-80"></div>
             
-            {/* Modern rotating ring loader */}
-            <div className="absolute inset-0 rounded-2xl">
-              <div className="absolute inset-2 border-4 border-transparent border-t-primary-foreground/30 border-r-primary-foreground/30 rounded-xl animate-spin"></div>
-              <div className="absolute inset-1 border-2 border-transparent border-b-primary-foreground/20 border-l-primary-foreground/20 rounded-2xl animate-spin" style={{ animationDirection: 'reverse', animationDuration: '1.5s' }}></div>
-            </div>
+            {/* Animated water drops */}
+            {[0, 1, 2, 3, 4, 5].map((i) => (
+              <div
+                key={i}
+                className="absolute w-3 h-3 bg-primary/60 rounded-full animate-pulse"
+                style={{
+                  transform: `rotate(${i * 60}deg) translateY(-24px)`,
+                  animationDelay: `${i * 0.2}s`,
+                  animationDuration: '1.2s'
+                }}
+              />
+            ))}
+            
+            {/* Ripple effect */}
+            <div className="absolute inset-0 border-2 border-primary/30 rounded-full animate-ping"></div>
           </div>
           
           {/* Title */}
