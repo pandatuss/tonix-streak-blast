@@ -4,6 +4,7 @@ import { BalanceCard } from "@/components/BalanceCard";
 import { DailyStreakCard } from "@/components/DailyStreakCard";
 import { UserStatsCard } from "@/components/UserStatsCard";
 import { BottomNavigation } from "@/components/BottomNavigation";
+import { TasksPage } from "@/components/TasksPage";
 import { Preloader } from "@/components/Preloader";
 import { useTelegramWebApp } from "@/hooks/useTelegramWebApp";
 import { useUserData } from "@/hooks/useUserData";
@@ -58,6 +59,8 @@ const Index = () => {
         );
       
       case 'bonuses':
+        return <TasksPage telegramId={telegramUser?.id} />;
+      
       case 'earn':
       case 'items':
       case 'leaderboard':
