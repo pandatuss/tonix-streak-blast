@@ -66,7 +66,6 @@ const Index = () => {
               
               <UserStatsCard 
                 telegramId={telegramUser?.id}
-                level={userData.level}
               />
             </div>
           </div>

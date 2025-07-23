@@ -4,16 +4,15 @@ import { useUserData } from "@/hooks/useUserData";
 
 interface UserStatsCardProps {
   telegramId?: number;
-  level?: number;
 }
 
 export const UserStatsCard = ({ 
-  telegramId,
-  level = 5
+  telegramId
 }: UserStatsCardProps) => {
   const { userData } = useUserData(telegramId);
   const totalDays = userData?.totalDays || 0;
   const totalTonix = userData?.totalTonix || 0;
+  const level = Math.floor(totalTonix / 10); // Every 10 tonix = 1 level
   return (
     <div className="grid grid-cols-3 gap-4 animate-slide-up">
       <div className="flex flex-col items-center space-y-2">
