@@ -231,7 +231,6 @@ export type Database = {
           referral_code: string | null
           telegram_id: number
           total_days: number | null
-          total_tonix: number | null
           updated_at: string
           username: string | null
         }
@@ -246,7 +245,6 @@ export type Database = {
           referral_code?: string | null
           telegram_id: number
           total_days?: number | null
-          total_tonix?: number | null
           updated_at?: string
           username?: string | null
         }
@@ -261,7 +259,6 @@ export type Database = {
           referral_code?: string | null
           telegram_id?: number
           total_days?: number | null
-          total_tonix?: number | null
           updated_at?: string
           username?: string | null
         }

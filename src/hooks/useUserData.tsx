@@ -8,7 +8,6 @@ interface UserData {
   firstName?: string;
   lastName?: string;
   profilePhotoUrl?: string;
-  totalTonix: number;
   currentStreak: number;
   lastCheckinDate?: string;
   totalDays: number;
@@ -55,7 +54,6 @@ export const useUserData = (telegramId?: number) => {
           firstName: user.first_name,
           lastName: user.last_name,
           profilePhotoUrl: user.profile_photo_url,
-          totalTonix: user.total_tonix || 0,
           currentStreak: user.current_streak || 0,
           lastCheckinDate: user.last_checkin_date,
           totalDays: user.total_days || 0,

@@ -1,6 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { Trophy, Calendar, Coins } from "lucide-react";
 import { useUserData } from "@/hooks/useUserData";
+import { useTransactions } from "@/hooks/useTransactions";
 
 interface UserStatsCardProps {
   telegramId?: number;
@@ -10,8 +11,9 @@ export const UserStatsCard = ({
   telegramId
 }: UserStatsCardProps) => {
   const { userData } = useUserData(telegramId);
+  const { getTotalEarnings } = useTransactions(telegramId);
   const totalDays = userData?.totalDays || 0;
-  const totalTonix = userData?.totalTonix || 0;
+  const totalTonix = getTotalEarnings();
   const level = userData?.level || 0;
   return (
     <div className="grid grid-cols-3 gap-4 animate-slide-up">

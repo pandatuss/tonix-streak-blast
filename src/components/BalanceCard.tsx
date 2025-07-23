@@ -10,8 +10,8 @@ interface BalanceCardProps {
 
 export const BalanceCard = ({ telegramId }: BalanceCardProps) => {
   const { userData, refreshData } = useUserData(telegramId);
-  const { getTodaysEarnings } = useTransactions(telegramId);
-  const balance = userData?.totalTonix || 0;
+  const { getTotalEarnings, getTodaysEarnings } = useTransactions(telegramId);
+  const balance = getTotalEarnings();
   const todaysEarnings = getTodaysEarnings();
 
   // Listen for real-time updates to user balance
