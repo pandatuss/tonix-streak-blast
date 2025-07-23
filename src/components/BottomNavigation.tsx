@@ -11,7 +11,7 @@ const navItems = [
   { id: 'bonuses', icon: Gift, label: 'TASK' },
   { id: 'earn', icon: Coins, label: 'EARN' },
   { id: 'items', icon: Package, label: 'ITEMS' },
-  { id: 'leaderboard', icon: Trophy, label: 'RANKING' },
+  { id: 'leaderboard', icon: Trophy, label: 'RANK' },
   { id: 'profile', icon: Users, label: 'FRENS' },
 ];
 
