@@ -157,46 +157,8 @@ export const useUserData = (telegramId?: number) => {
     }
   };
 
-  const updateTonixBalance = async (amount: number, operation: 'add' | 'subtract' = 'add'): Promise<boolean> => {
-    if (!telegramId || !userData) return false;
-
-    const newBalance = operation === 'add' 
-      ? userData.totalTonix + amount 
-      : Math.max(0, userData.totalTonix - amount);
-
-    const newLevel = Math.floor(newBalance / 10); // Every 10 tonix = 1 level
-
-    try {
-      const { error } = await supabase
-        .from('users')
-        .update({ 
-          total_tonix: newBalance,
-          level: newLevel 
-        })
-        .eq('telegram_id', telegramId);
-
-      if (error) {
-        console.error('Error updating tonix balance:', error);
-        return false;
-      }
-
-      // Note: Referral commission is now handled by the complete_task database function
-      // This prevents conflicts and ensures proper transaction recording
-
-      setUserData(prev => prev ? { 
-        ...prev, 
-        totalTonix: newBalance,
-        level: newLevel 
-      } : null);
-      return true;
-    } catch (error) {
-      console.error('Error in updateTonixBalance:', error);
-      return false;
-    }
-  };
-
-  // Note: Task completion should use the complete_task database function via useTaskData hook
-  // This ensures proper tonix allocation and transaction recording without resets
+  // All tonix management is now handled by database functions via useTaskData hook
+  // This ensures proper accumulation and prevents balance resets
 
   useEffect(() => {
     fetchUserData();
@@ -219,7 +181,6 @@ export const useUserData = (telegramId?: number) => {
     tasks,
     loading,
     updateDailyStreak,
-    updateTonixBalance,
     refreshData: fetchUserData,
   };
 };
