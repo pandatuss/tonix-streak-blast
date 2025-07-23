@@ -10,9 +10,10 @@ interface DailyStreakCardProps {
 }
 
 export const DailyStreakCard = ({ 
-  currentStreak = 2, 
+  currentStreak = 0, 
   hasCheckedInToday = false 
 }: DailyStreakCardProps) => {
+  const [streakCount, setStreakCount] = useState(currentStreak);
   const [checkedIn, setCheckedIn] = useState(hasCheckedInToday);
   const [checkInTime, setCheckInTime] = useState<Date | null>(null);
   const [timeLeft, setTimeLeft] = useState("");
@@ -52,6 +53,7 @@ export const DailyStreakCard = ({
     const now = new Date();
     setCheckedIn(true);
     setCheckInTime(now);
+    setStreakCount(prev => prev + 1);
     toast({
       title: "🎉 Check-in Successful!",
       description: "Your daily streak has been maintained! Come back in 24 hours.",
@@ -74,7 +76,7 @@ export const DailyStreakCard = ({
           </p>
         </div>
         <div className="text-right">
-          <span className="text-orange-400 text-sm font-bold">{currentStreak}</span>
+          <span className="text-orange-400 text-sm font-bold">{streakCount}</span>
         </div>
       </div>
 
