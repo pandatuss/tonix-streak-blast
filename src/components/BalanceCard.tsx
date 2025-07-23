@@ -1,5 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { useUserData } from "@/hooks/useUserData";
+import { useTransactions } from "@/hooks/useTransactions";
 
 interface BalanceCardProps {
   telegramId?: number;
@@ -7,7 +8,9 @@ interface BalanceCardProps {
 
 export const BalanceCard = ({ telegramId }: BalanceCardProps) => {
   const { userData } = useUserData(telegramId);
+  const { getTodaysEarnings } = useTransactions(telegramId);
   const balance = userData?.totalTonix || 0;
+  const todaysEarnings = getTodaysEarnings();
   return (
     <Card className="bg-card/50 backdrop-blur-sm border-border/10 p-6 text-center space-y-3 animate-slide-up">
       <div className="space-y-3">
@@ -23,7 +26,7 @@ export const BalanceCard = ({ telegramId }: BalanceCardProps) => {
           </p>
         </div>
         <p className="text-success text-sm font-medium">
-          Today: +100
+          Today: +{todaysEarnings.toLocaleString()}
         </p>
       </div>
     </Card>

@@ -6,6 +6,7 @@ import { UserStatsCard } from "@/components/UserStatsCard";
 import { BottomNavigation } from "@/components/BottomNavigation";
 import { TasksPage } from "@/components/TasksPage";
 import { ReferralPage } from "@/components/ReferralPage";
+import { TransactionHistory } from "@/components/TransactionHistory";
 import { Preloader } from "@/components/Preloader";
 import { useTelegramWebApp } from "@/hooks/useTelegramWebApp";
 import { useUserData } from "@/hooks/useUserData";
@@ -53,6 +54,10 @@ const Index = () => {
               />
               
               <UserStatsCard 
+                telegramId={telegramUser?.id}
+              />
+              
+              <TransactionHistory 
                 telegramId={telegramUser?.id}
               />
             </div>

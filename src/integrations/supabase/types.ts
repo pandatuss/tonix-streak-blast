@@ -189,6 +189,36 @@ export type Database = {
           },
         ]
       }
+      transactions: {
+        Row: {
+          amount: number
+          created_at: string
+          description: string | null
+          id: string
+          source_id: string | null
+          telegram_id: number
+          transaction_type: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          description?: string | null
+          id?: string
+          source_id?: string | null
+          telegram_id: number
+          transaction_type: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          description?: string | null
+          id?: string
+          source_id?: string | null
+          telegram_id?: number
+          transaction_type?: string
+        }
+        Relationships: []
+      }
       users: {
         Row: {
           created_at: string
