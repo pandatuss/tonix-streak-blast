@@ -14,7 +14,151 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      ranking: {
+        Row: {
+          id: string
+          rank_position: number | null
+          telegram_id: number
+          total_points: number | null
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          rank_position?: number | null
+          telegram_id: number
+          total_points?: number | null
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          rank_position?: number | null
+          telegram_id?: number
+          total_points?: number | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ranking_telegram_id_fkey"
+            columns: ["telegram_id"]
+            isOneToOne: true
+            referencedRelation: "users"
+            referencedColumns: ["telegram_id"]
+          },
+        ]
+      }
+      referrals: {
+        Row: {
+          bonus_points: number | null
+          created_at: string
+          id: string
+          referred_telegram_id: number
+          referrer_telegram_id: number
+        }
+        Insert: {
+          bonus_points?: number | null
+          created_at?: string
+          id?: string
+          referred_telegram_id: number
+          referrer_telegram_id: number
+        }
+        Update: {
+          bonus_points?: number | null
+          created_at?: string
+          id?: string
+          referred_telegram_id?: number
+          referrer_telegram_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "referrals_referred_telegram_id_fkey"
+            columns: ["referred_telegram_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["telegram_id"]
+          },
+          {
+            foreignKeyName: "referrals_referrer_telegram_id_fkey"
+            columns: ["referrer_telegram_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["telegram_id"]
+          },
+        ]
+      }
+      tasks: {
+        Row: {
+          completed_at: string | null
+          created_at: string
+          id: string
+          points_earned: number | null
+          status: string
+          task_name: string
+          task_type: string
+          telegram_id: number
+        }
+        Insert: {
+          completed_at?: string | null
+          created_at?: string
+          id?: string
+          points_earned?: number | null
+          status?: string
+          task_name: string
+          task_type: string
+          telegram_id: number
+        }
+        Update: {
+          completed_at?: string | null
+          created_at?: string
+          id?: string
+          points_earned?: number | null
+          status?: string
+          task_name?: string
+          task_type?: string
+          telegram_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tasks_telegram_id_fkey"
+            columns: ["telegram_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["telegram_id"]
+          },
+        ]
+      }
+      users: {
+        Row: {
+          created_at: string
+          first_name: string | null
+          last_name: string | null
+          profile_photo_url: string | null
+          telegram_id: number
+          total_points: number | null
+          updated_at: string
+          username: string | null
+        }
+        Insert: {
+          created_at?: string
+          first_name?: string | null
+          last_name?: string | null
+          profile_photo_url?: string | null
+          telegram_id: number
+          total_points?: number | null
+          updated_at?: string
+          username?: string | null
+        }
+        Update: {
+          created_at?: string
+          first_name?: string | null
+          last_name?: string | null
+          profile_photo_url?: string | null
+          telegram_id?: number
+          total_points?: number | null
+          updated_at?: string
+          username?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
