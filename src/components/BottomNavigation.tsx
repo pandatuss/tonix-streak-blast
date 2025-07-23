@@ -1,4 +1,4 @@
-import { Briefcase, Gift, Home, Trophy, Users } from "lucide-react";
+import { Briefcase, Gift, Home, Trophy, Users, Coins } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface BottomNavigationProps {
@@ -9,6 +9,7 @@ interface BottomNavigationProps {
 const navItems = [
   { id: 'home', icon: Home, label: 'HOME' },
   { id: 'bonuses', icon: Gift, label: 'TASK' },
+  { id: 'earn', icon: Coins, label: 'EARN' },
   { id: 'leaderboard', icon: Trophy, label: 'RANKING' },
   { id: 'profile', icon: Users, label: 'FRENS' },
 ];
