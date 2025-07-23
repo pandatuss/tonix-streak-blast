@@ -26,7 +26,7 @@ const Index = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-subtle font-inter text-foreground flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-subtle font-inter text-foreground pt-24 flex items-center justify-center">
         <div className="text-center space-y-4">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
           <p className="text-muted-foreground">Loading Telegram data...</p>
@@ -37,7 +37,7 @@ const Index = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gradient-subtle font-inter text-foreground flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-subtle font-inter text-foreground pt-24 flex items-center justify-center">
         <div className="text-center space-y-4 px-6">
           <div className="p-8 bg-gradient-card rounded-2xl shadow-card">
             <h2 className="text-xl font-bold text-foreground mb-2">Error</h2>
@@ -102,7 +102,7 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-subtle font-inter text-foreground">
+    <div className="min-h-screen bg-gradient-subtle font-inter text-foreground pt-24">
       <div className="max-w-md mx-auto min-h-screen bg-background relative">
         {renderContent()}
         
