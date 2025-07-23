@@ -133,6 +133,7 @@ export type Database = {
           first_name: string | null
           last_checkin_date: string | null
           last_name: string | null
+          level: number | null
           profile_photo_url: string | null
           telegram_id: number
           total_days: number | null
@@ -146,6 +147,7 @@ export type Database = {
           first_name?: string | null
           last_checkin_date?: string | null
           last_name?: string | null
+          level?: number | null
           profile_photo_url?: string | null
           telegram_id: number
           total_days?: number | null
@@ -159,6 +161,7 @@ export type Database = {
           first_name?: string | null
           last_checkin_date?: string | null
           last_name?: string | null
+          level?: number | null
           profile_photo_url?: string | null
           telegram_id?: number
           total_days?: number | null

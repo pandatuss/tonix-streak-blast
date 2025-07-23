@@ -12,6 +12,7 @@ interface UserData {
   currentStreak: number;
   lastCheckinDate?: string;
   totalDays: number;
+  level: number;
 }
 
 interface Task {
@@ -56,6 +57,7 @@ export const useUserData = (telegramId?: number) => {
           currentStreak: user.current_streak || 0,
           lastCheckinDate: user.last_checkin_date,
           totalDays: user.total_days || 0,
+          level: user.level || 0,
         });
       }
 
@@ -157,10 +159,15 @@ export const useUserData = (telegramId?: number) => {
       ? userData.totalTonix + amount 
       : Math.max(0, userData.totalTonix - amount);
 
+    const newLevel = Math.floor(newBalance / 10); // Every 10 tonix = 1 level
+
     try {
       const { error } = await supabase
         .from('users')
-        .update({ total_tonix: newBalance })
+        .update({ 
+          total_tonix: newBalance,
+          level: newLevel 
+        })
         .eq('telegram_id', telegramId);
 
       if (error) {
@@ -168,7 +175,11 @@ export const useUserData = (telegramId?: number) => {
         return false;
       }
 
-      setUserData(prev => prev ? { ...prev, totalTonix: newBalance } : null);
+      setUserData(prev => prev ? { 
+        ...prev, 
+        totalTonix: newBalance,
+        level: newLevel 
+      } : null);
       return true;
     } catch (error) {
       console.error('Error in updateTonixBalance:', error);

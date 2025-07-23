@@ -12,7 +12,7 @@ export const UserStatsCard = ({
   const { userData } = useUserData(telegramId);
   const totalDays = userData?.totalDays || 0;
   const totalTonix = userData?.totalTonix || 0;
-  const level = Math.floor(totalTonix / 10); // Every 10 tonix = 1 level
+  const level = userData?.level || 0;
   return (
     <div className="grid grid-cols-3 gap-4 animate-slide-up">
       <div className="flex flex-col items-center space-y-2">
