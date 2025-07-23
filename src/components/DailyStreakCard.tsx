@@ -99,9 +99,6 @@ export const DailyStreakCard = ({
           </>
         ) : (
           <>
-            <p className="text-muted-foreground text-xs">
-              ✅ Checked in! Next check-in available in:
-            </p>
             <div className="bg-gradient-to-r from-green-500/10 to-emerald-500/10 border border-green-500/20 rounded-lg p-3 text-center">
               <div className="text-green-400 font-mono text-lg font-bold">
                 {timeLeft}
