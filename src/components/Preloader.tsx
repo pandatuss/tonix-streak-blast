@@ -48,7 +48,12 @@ export const Preloader = ({ onComplete }: PreloaderProps) => {
           {/* Logo/Icon */}
           <div className="relative mx-auto w-20 h-20 bg-gradient-primary rounded-2xl flex items-center justify-center mb-6">
             <div className="text-3xl font-bold text-primary-foreground">T</div>
-            <div className="absolute inset-0 bg-gradient-primary rounded-2xl animate-pulse opacity-50"></div>
+            
+            {/* Modern rotating ring loader */}
+            <div className="absolute inset-0 rounded-2xl">
+              <div className="absolute inset-2 border-4 border-transparent border-t-primary-foreground/30 border-r-primary-foreground/30 rounded-xl animate-spin"></div>
+              <div className="absolute inset-1 border-2 border-transparent border-b-primary-foreground/20 border-l-primary-foreground/20 rounded-2xl animate-spin" style={{ animationDirection: 'reverse', animationDuration: '1.5s' }}></div>
+            </div>
           </div>
           
           {/* Title */}
