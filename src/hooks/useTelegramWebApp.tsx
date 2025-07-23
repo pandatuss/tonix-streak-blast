@@ -18,6 +18,7 @@ declare global {
           };
           auth_date: number;
           hash: string;
+          start_param?: string;
         };
         ready: () => void;
         expand: () => void;
@@ -59,8 +60,18 @@ export const useTelegramWebApp = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const saveUserToDatabase = async (user: TelegramUser) => {
+  const saveUserToDatabase = async (user: TelegramUser, referralCode?: string) => {
     try {
+      // First, check if user already exists
+      const { data: existingUser } = await supabase
+        .from('users')
+        .select('telegram_id')
+        .eq('telegram_id', user.id)
+        .single();
+
+      const isNewUser = !existingUser;
+
+      // Upsert user data
       const { error } = await supabase
         .from('users')
         .upsert({
@@ -69,7 +80,8 @@ export const useTelegramWebApp = () => {
           first_name: user.first_name,
           last_name: user.last_name || null,
           profile_photo_url: user.photo_url || null,
-          total_tonix: 0
+          total_tonix: 0,
+          referral_code: user.id.toString()
         }, {
           onConflict: 'telegram_id'
         });
@@ -77,6 +89,20 @@ export const useTelegramWebApp = () => {
       if (error) {
         console.error('Error saving user to database:', error);
         setError('Failed to save user data');
+        return;
+      }
+
+      // Process referral code if this is a new user and referral code exists
+      if (isNewUser && referralCode) {
+        try {
+          await supabase.rpc('process_referral_signup', {
+            new_user_telegram_id: user.id,
+            referrer_code: referralCode
+          });
+        } catch (referralError) {
+          console.error('Error processing referral:', referralError);
+          // Don't fail the main signup if referral processing fails
+        }
       }
     } catch (err) {
       console.error('Database error:', err);
@@ -99,9 +125,11 @@ export const useTelegramWebApp = () => {
               window.Telegram.WebApp.expand();
               
               const user = window.Telegram.WebApp.initDataUnsafe.user;
+              const startParam = window.Telegram.WebApp.initDataUnsafe.start_param;
+              
               if (user) {
                 setTelegramUser(user);
-                saveUserToDatabase(user);
+                saveUserToDatabase(user, startParam);
               } else {
                 // Fallback for development/testing
                 const mockUser: TelegramUser = {
@@ -131,9 +159,11 @@ export const useTelegramWebApp = () => {
           window.Telegram.WebApp.expand();
           
           const user = window.Telegram.WebApp.initDataUnsafe.user;
+          const startParam = window.Telegram.WebApp.initDataUnsafe.start_param;
+          
           if (user) {
             setTelegramUser(user);
-            await saveUserToDatabase(user);
+            await saveUserToDatabase(user, startParam);
           }
           setIsLoading(false);
         }

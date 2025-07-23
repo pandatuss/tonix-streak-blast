@@ -49,6 +49,7 @@ export type Database = {
       referrals: {
         Row: {
           bonus_tonix: number | null
+          commission_earned: number | null
           created_at: string
           id: string
           referred_telegram_id: number
@@ -56,6 +57,7 @@ export type Database = {
         }
         Insert: {
           bonus_tonix?: number | null
+          commission_earned?: number | null
           created_at?: string
           id?: string
           referred_telegram_id: number
@@ -63,6 +65,7 @@ export type Database = {
         }
         Update: {
           bonus_tonix?: number | null
+          commission_earned?: number | null
           created_at?: string
           id?: string
           referred_telegram_id?: number
@@ -195,6 +198,7 @@ export type Database = {
           last_name: string | null
           level: number | null
           profile_photo_url: string | null
+          referral_code: string | null
           telegram_id: number
           total_days: number | null
           total_tonix: number | null
@@ -209,6 +213,7 @@ export type Database = {
           last_name?: string | null
           level?: number | null
           profile_photo_url?: string | null
+          referral_code?: string | null
           telegram_id: number
           total_days?: number | null
           total_tonix?: number | null
@@ -223,6 +228,7 @@ export type Database = {
           last_name?: string | null
           level?: number | null
           profile_photo_url?: string | null
+          referral_code?: string | null
           telegram_id?: number
           total_days?: number | null
           total_tonix?: number | null
@@ -242,6 +248,14 @@ export type Database = {
       }
       complete_task: {
         Args: { user_telegram_id: number; system_task_id: string }
+        Returns: Json
+      }
+      process_referral_signup: {
+        Args: { new_user_telegram_id: number; referrer_code: string }
+        Returns: Json
+      }
+      update_referral_commission: {
+        Args: { referred_user_telegram_id: number; tonix_earned: number }
         Returns: Json
       }
     }

@@ -88,8 +88,8 @@ export const useUserData = (telegramId?: number) => {
     }
   };
 
-  const updateDailyStreak = async () => {
-    if (!telegramId || !userData) return;
+  const updateDailyStreak = async (): Promise<boolean> => {
+    if (!telegramId || !userData) return false;
 
     const today = new Date().toISOString().split('T')[0];
     const lastCheckin = userData.lastCheckinDate;
@@ -152,8 +152,8 @@ export const useUserData = (telegramId?: number) => {
     }
   };
 
-  const updateTonixBalance = async (amount: number, operation: 'add' | 'subtract' = 'add') => {
-    if (!telegramId || !userData) return;
+  const updateTonixBalance = async (amount: number, operation: 'add' | 'subtract' = 'add'): Promise<boolean> => {
+    if (!telegramId || !userData) return false;
 
     const newBalance = operation === 'add' 
       ? userData.totalTonix + amount 
@@ -175,6 +175,19 @@ export const useUserData = (telegramId?: number) => {
         return false;
       }
 
+      // Update referral commission if adding Tonix
+      if (operation === 'add' && amount > 0) {
+        try {
+          await supabase.rpc('update_referral_commission', {
+            referred_user_telegram_id: telegramId,
+            tonix_earned: amount
+          });
+        } catch (commissionError) {
+          console.error('Error updating referral commission:', commissionError);
+          // Don't fail the main operation if commission update fails
+        }
+      }
+
       setUserData(prev => prev ? { 
         ...prev, 
         totalTonix: newBalance,
@@ -187,8 +200,8 @@ export const useUserData = (telegramId?: number) => {
     }
   };
 
-  const addTask = async (taskType: string, taskName: string, tonixReward: number = 0) => {
-    if (!telegramId) return;
+  const addTask = async (taskType: string, taskName: string, tonixReward: number = 0): Promise<boolean> => {
+    if (!telegramId) return false;
 
     try {
       const { data, error } = await supabase

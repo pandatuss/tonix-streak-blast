@@ -5,6 +5,7 @@ import { DailyStreakCard } from "@/components/DailyStreakCard";
 import { UserStatsCard } from "@/components/UserStatsCard";
 import { BottomNavigation } from "@/components/BottomNavigation";
 import { TasksPage } from "@/components/TasksPage";
+import { ReferralPage } from "@/components/ReferralPage";
 import { Preloader } from "@/components/Preloader";
 import { useTelegramWebApp } from "@/hooks/useTelegramWebApp";
 import { useUserData } from "@/hooks/useUserData";
@@ -62,6 +63,8 @@ const Index = () => {
         return <TasksPage telegramId={telegramUser?.id} />;
       
       case 'earn':
+        return <ReferralPage />;
+      
       case 'items':
       case 'leaderboard':
       case 'profile':
