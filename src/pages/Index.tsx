@@ -25,9 +25,21 @@ const Index = () => {
     }
   }, [isLoading, userDataLoading, telegramUser]);
 
-  // Show preloader while loading
-  if (showPreloader || isLoading || userDataLoading) {
-    return <Preloader onComplete={() => setShowPreloader(false)} />;
+  // Show preloader while loading (temporarily disabled for development)
+  // if (showPreloader || isLoading || userDataLoading) {
+  //   return <Preloader onComplete={() => setShowPreloader(false)} />;
+  // }
+
+  // Temporary: Skip preloader for development
+  if (isLoading || userDataLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-subtle font-inter text-foreground pt-24 flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
+          <p className="text-muted-foreground">Loading...</p>
+        </div>
+      </div>
+    );
   }
 
   if (error) {
