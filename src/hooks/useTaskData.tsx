@@ -134,8 +134,10 @@ export const useTaskData = (telegramId?: number) => {
         });
         
         // Refresh data
-        await fetchUserTasks();
-        await checkTaskStatuses();
+        await Promise.all([fetchUserTasks(), checkTaskStatuses()]);
+        
+        // Trigger user data refresh via custom event for balance updates
+        window.dispatchEvent(new CustomEvent('userDataRefresh'));
         return true;
       } else {
         toast({

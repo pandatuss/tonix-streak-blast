@@ -15,35 +15,37 @@ export const useTransactions = (telegramId?: number) => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+  const fetchTransactions = async () => {
     if (!telegramId) {
       setLoading(false);
       return;
     }
 
-    const fetchTransactions = async () => {
-      try {
-        const { data, error } = await supabase
-          .from('transactions')
-          .select('*')
-          .eq('telegram_id', telegramId)
-          .order('created_at', { ascending: false })
-          .limit(50);
+    try {
+      const { data, error } = await supabase
+        .from('transactions')
+        .select('*')
+        .eq('telegram_id', telegramId)
+        .order('created_at', { ascending: false })
+        .limit(50);
 
-        if (error) {
-          console.error('Error fetching transactions:', error);
-          return;
-        }
-
-        setTransactions((data as Transaction[]) || []);
-      } catch (error) {
+      if (error) {
         console.error('Error fetching transactions:', error);
-      } finally {
-        setLoading(false);
+        return;
       }
-    };
 
+      setTransactions((data as Transaction[]) || []);
+    } catch (error) {
+      console.error('Error fetching transactions:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     fetchTransactions();
+
+    if (!telegramId) return;
 
     // Subscribe to real-time updates for new transactions
     const subscription = supabase
@@ -64,6 +66,18 @@ export const useTransactions = (telegramId?: number) => {
 
     return () => {
       subscription.unsubscribe();
+    };
+  }, [telegramId]);
+
+  // Listen for task completion events to refresh transactions
+  useEffect(() => {
+    const handleUserDataRefresh = () => {
+      fetchTransactions();
+    };
+
+    window.addEventListener('userDataRefresh', handleUserDataRefresh);
+    return () => {
+      window.removeEventListener('userDataRefresh', handleUserDataRefresh);
     };
   }, [telegramId]);
 

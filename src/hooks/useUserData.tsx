@@ -207,6 +207,18 @@ export const useUserData = (telegramId?: number) => {
     fetchUserData();
   }, [telegramId]);
 
+  // Listen for task completion events to refresh user data
+  useEffect(() => {
+    const handleUserDataRefresh = () => {
+      fetchUserData();
+    };
+
+    window.addEventListener('userDataRefresh', handleUserDataRefresh);
+    return () => {
+      window.removeEventListener('userDataRefresh', handleUserDataRefresh);
+    };
+  }, [telegramId]);
+
   return {
     userData,
     tasks,
