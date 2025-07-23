@@ -27,10 +27,10 @@ export const UserHeader = ({
       
       <div className="flex-1">
         <p className="text-primary text-lg font-semibold mb-1">
-          {username}
+          {displayName}
         </p>
         <p className="text-foreground/80 text-base">
-          {displayName}
+          {username}
         </p>
       </div>
     </div>
