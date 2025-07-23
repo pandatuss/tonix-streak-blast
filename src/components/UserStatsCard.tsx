@@ -14,84 +14,27 @@ export const UserStatsCard = ({
   return (
     <div className="grid grid-cols-3 gap-4 animate-slide-up">
       <div className="flex flex-col items-center space-y-2">
-        <div className="relative w-16 h-16">
-          <svg className="w-16 h-16 transform -rotate-90" viewBox="0 0 36 36">
-            <path
-              d="M18 2.0845
-                a 15.9155 15.9155 0 0 1 0 31.831
-                a 15.9155 15.9155 0 0 1 0 -31.831"
-              fill="none"
-              stroke="hsl(var(--border))"
-              strokeWidth="2"
-            />
-            <path
-              d="M18 2.0845
-                a 15.9155 15.9155 0 0 1 0 31.831
-                a 15.9155 15.9155 0 0 1 0 -31.831"
-              fill="none"
-              stroke="hsl(var(--primary))"
-              strokeWidth="2"
-              strokeDasharray={`${(level / 10) * 100}, 100`}
-            />
-          </svg>
-          <div className="absolute inset-0 flex items-center justify-center">
-            <span className="text-lg font-bold text-primary">{level}</span>
+        <div className="relative w-16 h-16 bg-primary/10 rounded-full border-2 border-primary/20 flex items-center justify-center">
+          <div className="text-center">
+            <span className="text-lg font-bold text-primary block">{level}</span>
           </div>
         </div>
         <p className="text-xs text-muted-foreground font-medium">LEVEL</p>
       </div>
       
       <div className="flex flex-col items-center space-y-2">
-        <div className="relative w-16 h-16">
-          <svg className="w-16 h-16 transform -rotate-90" viewBox="0 0 36 36">
-            <path
-              d="M18 2.0845
-                a 15.9155 15.9155 0 0 1 0 31.831
-                a 15.9155 15.9155 0 0 1 0 -31.831"
-              fill="none"
-              stroke="hsl(var(--border))"
-              strokeWidth="2"
-            />
-            <path
-              d="M18 2.0845
-                a 15.9155 15.9155 0 0 1 0 31.831
-                a 15.9155 15.9155 0 0 1 0 -31.831"
-              fill="none"
-              stroke="hsl(var(--primary))"
-              strokeWidth="2"
-              strokeDasharray={`${(totalDays / 30) * 100}, 100`}
-            />
-          </svg>
-          <div className="absolute inset-0 flex items-center justify-center">
-            <span className="text-lg font-bold text-primary">{totalDays}</span>
+        <div className="relative w-16 h-16 bg-blue-500/10 rounded-full border-2 border-blue-500/20 flex items-center justify-center">
+          <div className="text-center">
+            <span className="text-lg font-bold text-blue-500 block">{totalDays}</span>
           </div>
         </div>
         <p className="text-xs text-muted-foreground font-medium">DAYS</p>
       </div>
       
       <div className="flex flex-col items-center space-y-2">
-        <div className="relative w-16 h-16">
-          <svg className="w-16 h-16 transform -rotate-90" viewBox="0 0 36 36">
-            <path
-              d="M18 2.0845
-                a 15.9155 15.9155 0 0 1 0 31.831
-                a 15.9155 15.9155 0 0 1 0 -31.831"
-              fill="none"
-              stroke="hsl(var(--border))"
-              strokeWidth="2"
-            />
-            <path
-              d="M18 2.0845
-                a 15.9155 15.9155 0 0 1 0 31.831
-                a 15.9155 15.9155 0 0 1 0 -31.831"
-              fill="none"
-              stroke="hsl(var(--success))"
-              strokeWidth="2"
-              strokeDasharray="75, 100"
-            />
-          </svg>
-          <div className="absolute inset-0 flex items-center justify-center">
-            <span className="text-sm font-bold text-success">{totalTonix.toFixed(0)}</span>
+        <div className="relative w-16 h-16 bg-success/10 rounded-full border-2 border-success/20 flex items-center justify-center">
+          <div className="text-center">
+            <span className="text-sm font-bold text-success block">{totalTonix.toFixed(0)}</span>
           </div>
         </div>
         <p className="text-xs text-muted-foreground font-medium">TOTAL</p>
