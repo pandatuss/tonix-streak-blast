@@ -12,38 +12,90 @@ export const UserStatsCard = ({
   totalTonix = 50.042 
 }: UserStatsCardProps) => {
   return (
-    <Card className="bg-gradient-card shadow-card border-border/20 p-6 animate-slide-up">
-      <div className="grid grid-cols-3 gap-4 text-center">
-        <div className="space-y-2">
-          <p className="text-muted-foreground text-xs font-medium uppercase tracking-wider">
-            Level
-          </p>
-          <p className="text-2xl font-bold text-primary">
-            {level}
-          </p>
+    <div className="grid grid-cols-3 gap-4 animate-slide-up">
+      <div className="flex flex-col items-center space-y-2">
+        <div className="relative w-16 h-16">
+          <svg className="w-16 h-16 transform -rotate-90" viewBox="0 0 36 36">
+            <path
+              d="M18 2.0845
+                a 15.9155 15.9155 0 0 1 0 31.831
+                a 15.9155 15.9155 0 0 1 0 -31.831"
+              fill="none"
+              stroke="hsl(var(--border))"
+              strokeWidth="2"
+            />
+            <path
+              d="M18 2.0845
+                a 15.9155 15.9155 0 0 1 0 31.831
+                a 15.9155 15.9155 0 0 1 0 -31.831"
+              fill="none"
+              stroke="hsl(var(--primary))"
+              strokeWidth="2"
+              strokeDasharray={`${(level / 10) * 100}, 100`}
+            />
+          </svg>
+          <div className="absolute inset-0 flex items-center justify-center">
+            <span className="text-lg font-bold text-primary">{level}</span>
+          </div>
         </div>
-        
-        <div className="space-y-2 border-x border-border/30">
-          <p className="text-muted-foreground text-xs font-medium uppercase tracking-wider">
-            Days
-          </p>
-          <p className="text-2xl font-bold text-foreground">
-            {totalDays}
-          </p>
-        </div>
-        
-        <div className="space-y-2">
-          <p className="text-muted-foreground text-xs font-medium uppercase tracking-wider">
-            Total
-          </p>
-          <p className="text-lg font-bold text-success">
-            {totalTonix.toFixed(3)}
-          </p>
-          <p className="text-xs text-muted-foreground">
-            TONIX
-          </p>
-        </div>
+        <p className="text-xs text-muted-foreground font-medium">LEVEL</p>
       </div>
-    </Card>
+      
+      <div className="flex flex-col items-center space-y-2">
+        <div className="relative w-16 h-16">
+          <svg className="w-16 h-16 transform -rotate-90" viewBox="0 0 36 36">
+            <path
+              d="M18 2.0845
+                a 15.9155 15.9155 0 0 1 0 31.831
+                a 15.9155 15.9155 0 0 1 0 -31.831"
+              fill="none"
+              stroke="hsl(var(--border))"
+              strokeWidth="2"
+            />
+            <path
+              d="M18 2.0845
+                a 15.9155 15.9155 0 0 1 0 31.831
+                a 15.9155 15.9155 0 0 1 0 -31.831"
+              fill="none"
+              stroke="hsl(var(--primary))"
+              strokeWidth="2"
+              strokeDasharray={`${(totalDays / 30) * 100}, 100`}
+            />
+          </svg>
+          <div className="absolute inset-0 flex items-center justify-center">
+            <span className="text-lg font-bold text-primary">{totalDays}</span>
+          </div>
+        </div>
+        <p className="text-xs text-muted-foreground font-medium">DAYS</p>
+      </div>
+      
+      <div className="flex flex-col items-center space-y-2">
+        <div className="relative w-16 h-16">
+          <svg className="w-16 h-16 transform -rotate-90" viewBox="0 0 36 36">
+            <path
+              d="M18 2.0845
+                a 15.9155 15.9155 0 0 1 0 31.831
+                a 15.9155 15.9155 0 0 1 0 -31.831"
+              fill="none"
+              stroke="hsl(var(--border))"
+              strokeWidth="2"
+            />
+            <path
+              d="M18 2.0845
+                a 15.9155 15.9155 0 0 1 0 31.831
+                a 15.9155 15.9155 0 0 1 0 -31.831"
+              fill="none"
+              stroke="hsl(var(--success))"
+              strokeWidth="2"
+              strokeDasharray="75, 100"
+            />
+          </svg>
+          <div className="absolute inset-0 flex items-center justify-center">
+            <span className="text-sm font-bold text-success">{totalTonix.toFixed(0)}</span>
+          </div>
+        </div>
+        <p className="text-xs text-muted-foreground font-medium">TOTAL</p>
+      </div>
+    </div>
   );
 };

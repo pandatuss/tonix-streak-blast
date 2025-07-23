@@ -49,49 +49,47 @@ export const DailyStreakCard = ({
   };
 
   return (
-    <Card className="bg-gradient-card shadow-card border-border/20 p-6 space-y-6 card-hover animate-slide-up">
+    <Card className="bg-gradient-to-r from-orange-500/10 to-red-500/10 border border-orange-500/20 p-4 space-y-4 animate-slide-up">
       <div className="flex items-center gap-3">
-        <div className="p-3 bg-primary/10 rounded-xl">
-          <Flame className={`h-6 w-6 text-primary ${!checkedIn ? 'streak-pulse' : ''}`} />
+        <div className="p-2 bg-orange-500/20 rounded-lg">
+          <Flame className={`h-5 w-5 text-orange-400 ${!checkedIn ? 'streak-pulse' : ''}`} />
         </div>
-        <div>
-          <h3 className="text-lg font-semibold text-foreground">
+        <div className="flex-1">
+          <h3 className="text-base font-semibold text-foreground">
             Daily Streak Check-in
           </h3>
-          <p className="text-muted-foreground text-sm">
+          <p className="text-muted-foreground text-xs">
             Keep your streak alive!
           </p>
         </div>
+        <div className="text-right">
+          <span className="text-orange-400 text-sm font-bold">{currentStreak}</span>
+        </div>
       </div>
 
-      <div className="space-y-4">
-        <div className="text-center">
-          <p className="text-2xl font-bold text-primary mb-1">
-            {currentStreak} DAY STREAK
-          </p>
-          <p className="text-muted-foreground text-sm">
-            Next check-in in: {timeLeft}
-          </p>
-        </div>
+      <div className="space-y-3">
+        <p className="text-muted-foreground text-xs">
+          🔥 Your daily check-in is ready! Don't let your streak break.
+        </p>
 
         {!checkedIn ? (
           <Button 
             variant="gradient" 
-            size="lg" 
+            size="sm" 
             onClick={handleCheckIn}
             className="w-full"
           >
-            Check In
+            Check in (100 pts)
           </Button>
         ) : (
           <Button 
             variant="success" 
-            size="lg" 
+            size="sm" 
             disabled
             className="w-full"
           >
-            <Check className="h-5 w-5 mr-2" />
-            Streak Maintained Today
+            <Check className="h-4 w-4 mr-2" />
+            Checked in today
           </Button>
         )}
       </div>
