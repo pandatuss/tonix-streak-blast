@@ -103,7 +103,6 @@ export const DailyStreakCard = ({
               <div className="text-green-400 font-mono text-lg font-bold">
                 {timeLeft}
               </div>
-              <p className="text-green-300/70 text-xs mt-1">until next check-in</p>
             </div>
             <Button 
               variant="success" 
