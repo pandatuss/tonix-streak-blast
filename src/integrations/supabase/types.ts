@@ -85,11 +85,57 @@ export type Database = {
           },
         ]
       }
+      system_tasks: {
+        Row: {
+          action_url: string | null
+          category: string
+          cooldown_hours: number | null
+          created_at: string
+          description: string
+          frequency: string
+          id: string
+          is_active: boolean | null
+          task_name: string
+          tonix_reward: number
+        }
+        Insert: {
+          action_url?: string | null
+          category: string
+          cooldown_hours?: number | null
+          created_at?: string
+          description: string
+          frequency: string
+          id?: string
+          is_active?: boolean | null
+          task_name: string
+          tonix_reward?: number
+        }
+        Update: {
+          action_url?: string | null
+          category?: string
+          cooldown_hours?: number | null
+          created_at?: string
+          description?: string
+          frequency?: string
+          id?: string
+          is_active?: boolean | null
+          task_name?: string
+          tonix_reward?: number
+        }
+        Relationships: []
+      }
       tasks: {
         Row: {
+          action_url: string | null
+          category: string | null
           completed_at: string | null
+          cooldown_hours: number | null
           created_at: string
+          description: string | null
+          frequency: string | null
           id: string
+          is_repeatable: boolean | null
+          next_available_at: string | null
           status: string
           task_name: string
           task_type: string
@@ -97,9 +143,16 @@ export type Database = {
           tonix_earned: number | null
         }
         Insert: {
+          action_url?: string | null
+          category?: string | null
           completed_at?: string | null
+          cooldown_hours?: number | null
           created_at?: string
+          description?: string | null
+          frequency?: string | null
           id?: string
+          is_repeatable?: boolean | null
+          next_available_at?: string | null
           status?: string
           task_name: string
           task_type: string
@@ -107,9 +160,16 @@ export type Database = {
           tonix_earned?: number | null
         }
         Update: {
+          action_url?: string | null
+          category?: string | null
           completed_at?: string | null
+          cooldown_hours?: number | null
           created_at?: string
+          description?: string | null
+          frequency?: string | null
           id?: string
+          is_repeatable?: boolean | null
+          next_available_at?: string | null
           status?: string
           task_name?: string
           task_type?: string
@@ -176,7 +236,14 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      can_user_do_task: {
+        Args: { user_telegram_id: number; system_task_id: string }
+        Returns: boolean
+      }
+      complete_task: {
+        Args: { user_telegram_id: number; system_task_id: string }
+        Returns: Json
+      }
     }
     Enums: {
       [_ in never]: never
