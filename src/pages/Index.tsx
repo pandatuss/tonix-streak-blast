@@ -57,8 +57,9 @@ const Index = () => {
           </div>
         );
       
-      case 'inventory':
-      case 'cases':
+      case 'bonuses':
+      case 'earn':
+      case 'items':
       case 'leaderboard':
       case 'profile':
         return (
