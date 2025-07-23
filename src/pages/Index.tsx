@@ -54,24 +54,19 @@ const Index = () => {
         return (
           <div className="space-y-6 pb-24">
             <UserHeader 
-              username={userData.username}
-              firstName={userData.firstName}
-              lastName={userData.lastName}
-              avatarUrl={userData.avatarUrl}
+              telegramId={telegramUser?.id}
             />
             
             <div className="px-6 space-y-6">
-              <BalanceCard balance={userData.balance} />
+              <BalanceCard telegramId={telegramUser?.id} />
               
               <DailyStreakCard 
-                currentStreak={userData.currentStreak}
-                hasCheckedInToday={userData.hasCheckedInToday}
+                telegramId={telegramUser?.id}
               />
               
               <UserStatsCard 
+                telegramId={telegramUser?.id}
                 level={userData.level}
-                totalDays={userData.totalDays}
-                totalTonix={userData.totalTonix}
               />
             </div>
           </div>

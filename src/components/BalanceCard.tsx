@@ -1,10 +1,13 @@
 import { Card } from "@/components/ui/card";
+import { useUserData } from "@/hooks/useUserData";
 
 interface BalanceCardProps {
-  balance?: number;
+  telegramId?: number;
 }
 
-export const BalanceCard = ({ balance = 50.042 }: BalanceCardProps) => {
+export const BalanceCard = ({ telegramId }: BalanceCardProps) => {
+  const { userData } = useUserData(telegramId);
+  const balance = userData?.totalTonix || 0;
   return (
     <Card className="bg-card/50 backdrop-blur-sm border-border/10 p-6 text-center space-y-3 animate-slide-up">
       <div className="space-y-3">

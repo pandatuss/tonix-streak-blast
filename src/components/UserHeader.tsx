@@ -1,18 +1,20 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useUserData } from "@/hooks/useUserData";
 
 interface UserHeaderProps {
-  username?: string;
-  firstName?: string;
-  lastName?: string;
-  avatarUrl?: string;
+  telegramId?: number;
 }
 
 export const UserHeader = ({ 
-  username = "@tonixuser", 
-  firstName = "Tonix", 
-  lastName = "User",
-  avatarUrl 
+  telegramId
 }: UserHeaderProps) => {
+  const { userData } = useUserData(telegramId);
+  
+  const username = userData?.username ? `@${userData.username}` : "@tonixuser";
+  const firstName = userData?.firstName || "Tonix";
+  const lastName = userData?.lastName || "User";
+  const avatarUrl = userData?.profilePhotoUrl;
+  
   const displayName = `${firstName}${lastName ? ` ${lastName}` : ''}`;
   const initials = `${firstName?.[0] || 'T'}${lastName?.[0] || 'U'}`;
 

@@ -129,30 +129,39 @@ export type Database = {
       users: {
         Row: {
           created_at: string
+          current_streak: number | null
           first_name: string | null
+          last_checkin_date: string | null
           last_name: string | null
           profile_photo_url: string | null
           telegram_id: number
+          total_days: number | null
           total_tonix: number | null
           updated_at: string
           username: string | null
         }
         Insert: {
           created_at?: string
+          current_streak?: number | null
           first_name?: string | null
+          last_checkin_date?: string | null
           last_name?: string | null
           profile_photo_url?: string | null
           telegram_id: number
+          total_days?: number | null
           total_tonix?: number | null
           updated_at?: string
           username?: string | null
         }
         Update: {
           created_at?: string
+          current_streak?: number | null
           first_name?: string | null
+          last_checkin_date?: string | null
           last_name?: string | null
           profile_photo_url?: string | null
           telegram_id?: number
+          total_days?: number | null
           total_tonix?: number | null
           updated_at?: string
           username?: string | null

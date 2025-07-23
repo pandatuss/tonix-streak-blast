@@ -3,21 +3,23 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Flame, Check } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useUserData } from "@/hooks/useUserData";
 
 interface DailyStreakCardProps {
-  currentStreak?: number;
-  hasCheckedInToday?: boolean;
+  telegramId?: number;
 }
 
 export const DailyStreakCard = ({ 
-  currentStreak = 0, 
-  hasCheckedInToday = false 
+  telegramId
 }: DailyStreakCardProps) => {
-  const [streakCount, setStreakCount] = useState(currentStreak);
-  const [checkedIn, setCheckedIn] = useState(hasCheckedInToday);
+  const { userData, updateDailyStreak } = useUserData(telegramId);
   const [checkInTime, setCheckInTime] = useState<Date | null>(null);
   const [timeLeft, setTimeLeft] = useState("");
   const { toast } = useToast();
+
+  // Check if user has checked in today
+  const today = new Date().toISOString().split('T')[0];
+  const hasCheckedInToday = userData?.lastCheckinDate === today;
 
   // Calculate time until next check-in (24 hours after last check-in)
   useEffect(() => {
@@ -29,7 +31,6 @@ export const DailyStreakCard = ({
       const diff = nextCheckIn.getTime() - now.getTime();
       
       if (diff <= 0) {
-        setCheckedIn(false);
         setCheckInTime(null);
         setTimeLeft("");
         return;
@@ -49,23 +50,24 @@ export const DailyStreakCard = ({
     }
   }, [checkInTime]);
 
-  const handleCheckIn = () => {
-    const now = new Date();
-    setCheckedIn(true);
-    setCheckInTime(now);
-    setStreakCount(prev => prev + 1);
-    toast({
-      title: "🎉 Check-in Successful!",
-      description: "Your daily streak has been maintained! Come back in 24 hours.",
-      duration: 4000,
-    });
+  const handleCheckIn = async () => {
+    const success = await updateDailyStreak();
+    if (success) {
+      const now = new Date();
+      setCheckInTime(now);
+      toast({
+        title: "🎉 Check-in Successful!",
+        description: "Your daily streak has been maintained! Come back in 24 hours.",
+        duration: 4000,
+      });
+    }
   };
 
   return (
     <Card className="bg-gradient-to-r from-orange-500/10 to-red-500/10 border border-orange-500/20 p-4 space-y-4 animate-slide-up">
       <div className="flex items-center gap-3">
         <div className="p-2 bg-orange-500/20 rounded-lg">
-          <Flame className={`h-5 w-5 text-orange-400 ${!checkedIn ? 'streak-pulse' : ''}`} />
+          <Flame className={`h-5 w-5 text-orange-400 ${!hasCheckedInToday ? 'streak-pulse' : ''}`} />
         </div>
         <div className="flex-1">
           <h3 className="text-base font-semibold text-foreground">
@@ -76,12 +78,12 @@ export const DailyStreakCard = ({
           </p>
         </div>
         <div className="text-right">
-          <span className="text-orange-400 text-sm font-bold">{streakCount}</span>
+          <span className="text-orange-400 text-sm font-bold">{userData?.currentStreak || 0}</span>
         </div>
       </div>
 
       <div className="space-y-3">
-        {!checkedIn ? (
+        {!hasCheckedInToday ? (
           <>
             <p className="text-muted-foreground text-xs">
               🔥 Your daily check-in is ready! Don't let your streak break.
